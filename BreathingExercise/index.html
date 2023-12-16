@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Breathing Exercise</title>
+</head>
+<body>
+    <nav>
+        <img src="data/logo.png" alt="Logo image">
+        <p>Anxiety Relaxation App</p>
+    </nav>
+    <div class="main">
+        <video id="vid" width="640" height="360" loop>
+            <source src="data/BreathingExercise.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="buttons">
+            <button id="startbtn" onclick="playIt()">Start</button>
+            <button id="pausebtn" onclick="stopIt()">Pause</button>
+            <button id="exitbtn" onclick="window.close()">Close</button>
+        </div>
+
+        <div class="timerBox">
+            <p id="timer">1:00</p>
+        </div>
+    </div>
+
+<script>
+    var video = document.getElementById('vid')
+    function playIt(){
+        video.play()
+        startTimer()
+    }
+
+    function stopIt(){
+        video.pause()
+        pauseTimer()
+    }
+//----------------------------
+
+let timer;
+let timeRemaining = 60; // 1 minute in seconds
+let isPaused = false;
+
+    function startTimer() {
+        isPaused=false
+        if (!timer) {
+            timer = setInterval(updateTimer, 1000);
+        }
+}
+
+function pauseTimer() {
+    if(isPaused==false){
+        isPaused = !isPaused;
+    }
+}
+
+    function updateTimer() {
+    if (!isPaused) {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+
+        document.getElementById('timer').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+        if (timeRemaining > 0) {
+            timeRemaining--;
+        } else {
+            clearInterval(timer);
+            timer = null;
+            stopIt()
+            alert('Exercise Complete!');
+            window.close()
+        }
+    }
+}
+</script>
+</body>
+</html>
